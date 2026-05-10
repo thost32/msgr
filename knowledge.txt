@@ -1,0 +1,73 @@
+# =============================================
+#   YOUR BUSINESS KNOWLEDGE BASE
+#   Edit this file with your own information!
+#   The bot will use everything here to answer
+#   customer questions automatically.
+# =============================================
+
+BUSINESS NAME:
+Juan's Online Shop
+
+DESCRIPTION:
+We sell handmade Filipino crafts, accessories, and gift items. All products are made locally and shipped nationwide.
+
+PRODUCTS & SERVICES:
+- Handmade woven bags (₱350 - ₱850)
+- Capiz shell accessories and decor (₱150 - ₱500)
+- Custom gift baskets (₱500 - ₱2,000)
+- Personalized items (mugs, shirts, tote bags)
+
+HOW TO ORDER:
+Customers can order by:
+1. Messaging us directly on Facebook
+2. Visiting our Shopee store: shopee.ph/juansonlineshop
+3. Calling or texting us at 09XX-XXX-XXXX
+
+PAYMENT METHODS:
+- GCash: 09XX-XXX-XXXX (Juan dela Cruz)
+- Bank transfer: BDO Account 1234-5678-90
+- Cash on Delivery (COD) available via Shopee
+
+SHIPPING:
+- We ship via LBC, J&T, and Lalamove
+- Metro Manila: 1-2 days
+- Provincial: 3-5 days
+- Shipping fee: ₱80-₱150 depending on location
+- Free shipping on orders above ₱1,500
+
+BUSINESS HOURS:
+Monday to Saturday: 8:00 AM - 6:00 PM
+Sunday: 9:00 AM - 3:00 PM
+We reply to messages within 1-2 hours during business hours.
+
+LOCATION:
+Imus, Cavite (pickup available by appointment)
+
+RETURN / REFUND POLICY:
+- Damaged or wrong items will be replaced for free
+- Customer must report within 24 hours of receiving the item
+- Send a photo of the damaged item via Messenger
+
+FREQUENTLY ASKED QUESTIONS:
+
+Q: Do you accept bulk or wholesale orders?
+A: Yes! We offer discounts for bulk orders of 10 items or more. Message us for a custom quote.
+
+Q: Can I request a custom design?
+A: Absolutely! We accept custom orders. Processing time is 5-7 business days.
+
+Q: Do you ship internationally?
+A: Not yet, but we're working on it! Currently we ship within the Philippines only.
+
+Q: How do I track my order?
+A: Once shipped, we'll send you a tracking number via Messenger so you can track your package.
+
+SOCIAL MEDIA:
+- Facebook: facebook.com/juansonlineshop
+- Instagram: @juansonlineshop
+- Shopee: shopee.ph/juansonlineshop
+
+CONTACT:
+- Facebook Messenger (fastest response)
+- Email: juan@example.com
+- Phone/SMS/Viber: 09XX-XXX-XXXX
