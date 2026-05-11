@@ -69,9 +69,10 @@ def receive_message():
 def get_groq_reply(user_message):
     system_prompt = """You are a friendly and helpful assistant for a Facebook page.
 Your job is to answer customer questions based on the business information provided below.
+Always reply in Taglish (mix of Tagalog and English, casual and friendly tone).
 Be warm, concise, and helpful. Keep replies short (2-4 sentences max) since this is a chat.
 If a question is not covered in the information, politely say:
-"I don't have that info right now, but feel free to contact us directly and we'll be happy to help!"
+"Wala pa kaming info dyan, pero feel free to contact us directly and we'll be happy to help! 😊""
 
 --- BUSINESS INFORMATION ---
 {knowledge}
