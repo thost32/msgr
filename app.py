@@ -10,6 +10,12 @@ VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN", "my_secret_verify_token")
 PAGE_ACCESS_TOKEN = os.environ.get("PAGE_ACCESS_TOKEN")
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 
+# --- Admin Facebook User IDs (who can use !stop / !go / !status)
+ADMIN_IDS = os.environ.get("ADMIN_IDS", "").split(",")
+
+# --- Bot state (in-memory toggle) ---
+bot_active = True  # Bot starts ON by default
+
 # --- Load your knowledge base once at startup ---
 def load_knowledge():
     try:
@@ -43,6 +49,7 @@ def verify_webhook():
 # --- Receive Messages from Facebook (POST) ---
 @app.route("/webhook", methods=["POST"])
 def receive_message():
+    global bot_active
     data = request.get_json()
 
     if data.get("object") == "page":
@@ -50,15 +57,59 @@ def receive_message():
             for event in entry.get("messaging", []):
                 sender_id = event["sender"]["id"]
 
-                # Handle text messages only
                 if "message" in event:
                     msg = event["message"]
-                    # Skip messages sent by the page itself (echoes)
+
                     if msg.get("is_echo"):
                         continue
+
                     if "text" in msg:
-                        user_text = msg["text"]
+                        user_text = msg["text"].strip()
                         print(f"📩 Message from {sender_id}: {user_text}")
+
+                        # --- Admin commands ---
+                        if sender_id in ADMIN_IDS:
+                            cmd = user_text.lower()
+
+                            if cmd == "!stop":
+                                bot_active = False
+                                send_facebook_message(sender_id,
+                                    "⏸️ Bot is now PAUSED. Customers will not receive auto-replies. "
+                                    "Send !go to turn it back on.")
+                                print("⏸️ Bot paused by admin.")
+                                continue
+
+                            elif cmd == "!go":
+                                bot_active = True
+                                send_facebook_message(sender_id,
+                                    "▶️ Bot is now ACTIVE. Auto-replies are back on! 😊")
+                                print("▶️ Bot resumed by admin.")
+                                continue
+
+                            elif cmd == "!status":
+                                status = "▶️ ACTIVE — auto-replying to customers." if bot_active else "⏸️ PAUSED — not replying to customers."
+                                send_facebook_message(sender_id,
+                                    f"Bot status: {status}\n\n"
+                                    "Commands:\n"
+                                    "!stop — stop auto-replies\n"
+                                    "!go — start auto-replies\n"
+                                    "!status — check current status")
+                                continue
+
+                            elif cmd == "!help":
+                                send_facebook_message(sender_id,
+                                    "🤖 Admin commands:\n\n"
+                                    "!stop — pause the bot\n"
+                                    "!go — resume the bot\n"
+                                    "!status — check if bot is on or off\n"
+                                    "!help — show this message")
+                                continue
+
+                        # --- Normal customer message ---
+                        if not bot_active:
+                            print(f"⏸️ Bot is paused. Skipping reply to {sender_id}.")
+                            continue
+
                         reply = get_groq_reply(user_text)
                         send_facebook_message(sender_id, reply)
 
@@ -72,7 +123,7 @@ Your job is to answer customer questions based on the business information provi
 Always reply in Taglish (mix of Tagalog and English, casual and friendly tone).
 Be warm, concise, and helpful. Keep replies short (2-4 sentences max) since this is a chat.
 If a question is not covered in the information, politely say:
-"Wala pa kaming info dyan, pero feel free to contact us directly and we'll be happy to help! 😊""
+"Wala pa kaming info dyan, pero feel free to contact us directly and we'll be happy to help! 😊"
 
 --- BUSINESS INFORMATION ---
 {knowledge}
@@ -116,7 +167,8 @@ def send_facebook_message(recipient_id, text):
 # --- Health check route ---
 @app.route("/", methods=["GET"])
 def home():
-    return "✅ Facebook Messenger Bot is running!", 200
+    status = "▶️ ACTIVE" if bot_active else "⏸️ PAUSED"
+    return f"✅ Facebook Messenger Bot is running! | Bot status: {status}", 200
 
 
 if __name__ == "__main__":
